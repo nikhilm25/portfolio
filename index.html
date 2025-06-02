@@ -1,0 +1,38 @@
+<!-- nikhil -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="Nikhil's interactive terminal portfolio - A retro CRT-style showcase">
+    <title>nikhil@portfolio:~$ | Interactive Terminal Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+</head>
+<body>
+    <!-- CRT Monitor Frame Effects -->
+    <div class="crt-frame"></div>
+    <div class="crt-scanlines"></div>
+    <div class="crt-glow"></div>
+    <div class="vhs-scanlines"></div>
+    <div class="vhs-random-lines"></div>
+    
+    <!-- Hidden canvas for CRT effect source -->
+    <canvas id="terminalCanvas" style="display: none;"></canvas>
+    
+    <div class="terminal-container">
+        <div class="crt-overlay">TERMINAL-01</div>
+        <div class="terminal-body">
+            <div class="terminal-output" id="output"></div>
+            <div class="prompt-line">
+                <span class="prompt">nikhil@portfolio:~$</span>
+                <input type="text" class="command-input" id="commandInput" autocomplete="off" spellcheck="false">
+            </div>
+        </div>
+    </div>
+
+    <!-- glfx.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/glfx/0.0.2/glfx.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

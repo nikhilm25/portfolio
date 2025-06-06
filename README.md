@@ -1,3 +1,5 @@
+master shit should be there
+
 shit to do:
 host
 add in your actual projects and stuff

@@ -212,7 +212,8 @@ class Terminal {
         const suggestionsDiv = document.createElement('div');
         suggestionsDiv.className = 'command-suggestions';
         suggestionsDiv.id = 'suggestions';
-        document.querySelector('.prompt-line').appendChild(suggestionsDiv);
+        // Append to body instead of prompt-line for fixed positioning
+        document.body.appendChild(suggestionsDiv);
         
         this.input.addEventListener('input', (e) => this.handleInputChange(e));
         this.input.addEventListener('keydown', (e) => {
@@ -234,7 +235,7 @@ class Terminal {
         if (value.length > 0) {
             this.commandSuggestions = this.allCommands.filter(cmd => 
                 cmd.startsWith(value)
-            ).slice(0, 5);
+            ).slice(0, 8); // Show more suggestions since they're inline
             this.showSuggestions();
         } else {
             this.hideSuggestions();
@@ -248,15 +249,26 @@ class Terminal {
             return;
         }
         
-        suggestionsDiv.innerHTML = this.commandSuggestions.map((cmd, index) => 
+        // Create vertical suggestion display for right side
+        const suggestionItems = this.commandSuggestions.map((cmd, index) => 
             `<div class="suggestion-item${index === this.selectedSuggestion ? ' selected' : ''}" 
                  onclick="terminal.selectSuggestion('${cmd}')">${cmd}</div>`
-        ).join('');
+        );
+        
+        suggestionsDiv.innerHTML = suggestionItems.join('');
         suggestionsDiv.style.display = 'block';
+        
+        // Position the suggestions box relative to terminal
+        const terminalBody = document.querySelector('.terminal-body');
+        const rect = terminalBody.getBoundingClientRect();
+        suggestionsDiv.style.top = `${rect.top + 20}px`;
+        suggestionsDiv.style.right = '20px';
     }
 
     hideSuggestions() {
-        document.getElementById('suggestions').style.display = 'none';
+        const suggestionsDiv = document.getElementById('suggestions');
+        suggestionsDiv.style.display = 'none';
+        suggestionsDiv.innerHTML = '';
         this.selectedSuggestion = -1;
     }
 
@@ -273,59 +285,39 @@ class Terminal {
         } else if (this.selectedSuggestion >= 0) {
             this.input.value = this.commandSuggestions[this.selectedSuggestion];
             this.hideSuggestions();
+        } else if (this.commandSuggestions.length > 1) {
+            // Find common prefix like real terminals do
+            const commonPrefix = this.findCommonPrefix(this.commandSuggestions);
+            if (commonPrefix.length > this.input.value.length) {
+                this.input.value = commonPrefix;
+            }
         }
+    }
+
+    findCommonPrefix(commands) {
+        if (commands.length === 0) return '';
+        if (commands.length === 1) return commands[0];
+        
+        let prefix = commands[0];
+        for (let i = 1; i < commands.length; i++) {
+            while (commands[i].indexOf(prefix) !== 0) {
+                prefix = prefix.substring(0, prefix.length - 1);
+                if (prefix === '') return '';
+            }
+        }
+        return prefix;
     }
 
     navigateSuggestions(direction) {
         if (this.commandSuggestions.length === 0) return;
         
         this.selectedSuggestion += direction;
-        if (this.selectedSuggestion < 0) {
+        if (this.selectedSuggestion < -1) {
             this.selectedSuggestion = this.commandSuggestions.length - 1;
         } else if (this.selectedSuggestion >= this.commandSuggestions.length) {
-            this.selectedSuggestion = 0;
+            this.selectedSuggestion = -1;
         }
         this.showSuggestions();
-    }
-
-    async typeHTML(element, html, speed = this.typeSpeed) {
-        this.isTyping = true;
-        this.shouldStopTyping = false;
-        
-        // Create a temporary element to parse HTML and get plain text
-        const temp = document.createElement('div');
-        temp.innerHTML = html;
-        const textContent = temp.textContent || temp.innerText || '';
-        
-        // Type character by character as plain text
-        for (let i = 0; i < textContent.length; i++) {
-            if (this.shouldStopTyping) {
-                element.innerHTML = html;
-                break;
-            }
-            element.textContent = textContent.slice(0, i + 1);
-            
-            // Scroll to bottom during typing for smooth follow effect
-            this.scrollToBottom();
-            
-            // Random loading pauses (5% chance per character)
-            if (Math.random() < 0.05) {
-                await this.sleep(Math.random() * 200 + 100); // 100-300ms pause
-            }
-            
-            await this.sleep(speed);
-        }
-        
-        // Set the full HTML with formatting at the end
-        if (!this.shouldStopTyping) {
-            element.innerHTML = html;
-        }
-        
-        // Final scroll to ensure we're at the bottom
-        this.scrollToBottom();
-        
-        this.isTyping = false;
-        this.input.focus();
     }
 
     executeCommand(command) {
@@ -1116,14 +1108,14 @@ class Terminal {
     async showAbout() {
         const aboutLines = [
             `<div class="command-output"><h1>About Me</h1></div>`,
-            `<div>Hi! I'm Nikhil, a passionate software developer and computer science student.</div>`,
+            `<div>Hi! I'm Nikhil, currently a student at NSUT studying Computer Science and Artificial Intelligence.</div>`,
             ``,
-            `<div>I love building things with code and exploring new technologies.</div>`,
+            `<div>I use arch btw.</div>`,
             `<div>Currently focused on:</div>`,
-            `<ul><li>Backend development with modern frameworks</li></ul>`,
-            `<ul><li>Data structures and algorithms</li></ul>`,
-            `<ul><li>Open source contributions</li></ul>`,
-            `<ul><li>System design and architecture</li></ul>`,
+            `<ul><li>Java and Spring Boot</li></ul>`,
+            `<ul><li>Linux and CLI applications</li></ul>`,
+            `<ul><li>Data structures and algorithms at <a href="https://leetcode.com/nikhilmaan25/">Leetcode</a></li></ul>`,
+            `<ul><li>My open source projects</li></ul>`,
             ``,
             `<div class="info">Type 'skills' to see my technical expertise</div>`
         ];

@@ -1274,40 +1274,23 @@ class Terminal {
     }
 
     async showResume() {
-        const resumeLines = [
-            `<div class="command-output"><h1>Resume</h1></div>`,
-            ``,
-            `<div class="info">Loading resume data...</div>`,
-            ``,
-            `<div class="command-output"><h2>Education:</h2></div>`,
-            `<ul><li>Bachelor of Technology in Computer Science</li></ul>`,
-            `<ul><li>Expected graduation: 2025</li></ul>`,
-            `<ul><li>Relevant coursework: Data Structures, Algorithms, DBMS, OS</li></ul>`,
-            ``,
-            `<div class="command-output"><h2>Experience:</h2></div>`,
-            `<ul><li>Software Development Intern (Summer 2023)</li></ul>`,
-            `<ul><li>Open Source Contributor (2022-Present)</li></ul>`,
-            `<ul><li>Competitive Programming (2021-Present)</li></ul>`,
-            ``,
-            `<div class="command-output"><h2>Key Projects:</h2></div>`,
-            `<ul><li>Terminal Portfolio - Interactive portfolio with CRT effects</li></ul>`,
-            `<ul><li>Shell Implementation - Unix-like shell in Java</li></ul>`,
-            `<ul><li>Life Checklist - Flutter mobile application</li></ul>`,
-            ``,
-            `<div class="command-output"><h2>Technical Skills:</h2></div>`,
-            `<ul><li>Languages: C/C++, Python, JavaScript, Java, Go</li></ul>`,
-            `<ul><li>Technologies: Flutter, Node.js, MySQL, Git, Docker</li></ul>`,
-            `<ul><li>Concepts: DSA, OOP, System Design, Database Design</li></ul>`,
-            ``,
-            `<div class="success">For a detailed PDF resume, please contact me directly</div>`
-        ];
+    const resumeLines = [
+        `<div class="command-output"><h1><Resume></h1></div>`,
+        ``,
+        `<div class="info">Loading resume data...</div>`,
+        ``,
+        `<div class="command-output">Resume available at: <a href="https://github.com/nikhilm25/resume/blob/main/Nikhil%20Resume%20Jun%202025.pdf" target="https://github.com/nikhilm25/resume/blob/main/Nikhil%20Resume%20Jun%202025.pdf">Click here to view</a></div>`,
+        ``,
+        `<div class="success">Redirecting you to the resume link!</div>`
+    ];
 
-        for (const line of resumeLines) {
-            if (this.shouldStopTyping) break;
-            await this.addOutput(line);
-            await this.sleep(60);
-        }
+    for (const line of resumeLines) {
+        if (this.shouldStopTyping) break;
+        await this.addOutput(line);
+        await this.sleep(60);
     }
+}
+
 
     async exitTerminal() {
         await this.addOutput('<div class="warning">Initiating terminal shutdown...</div>');

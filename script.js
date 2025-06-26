@@ -6,7 +6,7 @@ class Terminal {
         this.commandHistory = [];
         this.historyIndex = -1;
         this.isTyping = false;
-        this.typeSpeed = 15; // milliseconds per character (halved from 30)
+        this.typeSpeed = 8; // milliseconds per character (reduced from 15)
         this.currentTypingPromise = null;
         this.shouldStopTyping = false;
         this.startTime = Date.now(); // Add start time for uptime command
@@ -47,10 +47,10 @@ class Terminal {
         
         // Command list for suggestions
         this.allCommands = [
-            'help', 'about', 'skills', 'projects', 'timeline', 'contact', 'resume',
+            'help', 'about', 'skills', 'projects', 'contact', 'resume',
             'clear', 'exit', 'echo', 'neofetch', 'ls', 'pwd', 'whoami', 'date',
             'uptime', 'cat', 'tree', 'history', 'fortune', 'cowsay', 'figlet',
-            'theme', 'sound', 'matrix', 'hack', 'coffee', 'joke', 'weather'
+            'theme', 'sound', 'matrix', 'hack', 'coffee', 'weather'
         ];
         
         this.easterEggs = [
@@ -126,18 +126,34 @@ class Terminal {
         this.isTyping = true;
         this.shouldStopTyping = false;
         
+        // Set initial styles to match final output
+        element.style.fontFamily = "'VT323', monospace";
+        element.style.fontSize = "inherit";
+        element.style.lineHeight = "inherit";
+        
         // Create a temporary element to parse HTML and get plain text
         const temp = document.createElement('div');
         temp.innerHTML = html;
         const textContent = temp.textContent || temp.innerText || '';
         
-        // Type character by character as plain text
+        // Type character by character as plain text with consistent styling
         for (let i = 0; i < textContent.length; i++) {
             if (this.shouldStopTyping) {
                 element.innerHTML = html;
+                // Ensure final HTML maintains consistent styling
+                this.applyConsistentStyling(element);
                 break;
             }
-            element.textContent = textContent.slice(0, i + 1);
+            
+            // Create a text node to maintain consistent font rendering
+            const textSpan = document.createElement('span');
+            textSpan.style.fontFamily = "'VT323', monospace";
+            textSpan.style.fontSize = "inherit";
+            textSpan.style.lineHeight = "inherit";
+            textSpan.textContent = textContent.slice(0, i + 1);
+            
+            element.innerHTML = '';
+            element.appendChild(textSpan);
             
             // Scroll to bottom during typing for smooth follow effect
             this.scrollToBottom();
@@ -153,6 +169,8 @@ class Terminal {
         // Set the full HTML with formatting at the end
         if (!this.shouldStopTyping) {
             element.innerHTML = html;
+            // Apply consistent styling to all child elements
+            this.applyConsistentStyling(element);
         }
         
         // Final scroll to ensure we're at the bottom
@@ -160,6 +178,17 @@ class Terminal {
         
         this.isTyping = false;
         this.input.focus();
+    }
+
+    // New method to ensure consistent styling
+    applyConsistentStyling(element) {
+        // Apply consistent styling to the element and all its children
+        const allElements = [element, ...element.querySelectorAll('*')];
+        allElements.forEach(el => {
+            el.style.fontFamily = "'VT323', monospace";
+            el.style.fontSize = "inherit";
+            el.style.lineHeight = "inherit";
+        });
     }
 
     sleep(ms) {
@@ -347,14 +376,12 @@ class Terminal {
             case 'skills':
                 this.showSkills();
                 break;
-            case 'projects':
-                this.showProjects();
-                break;
-            case 'timeline':
-                this.showTimeline();
-                break;
+            // Add this case after line ~385
             case 'clear':
                 this.clearTerminal();
+                break;
+            case 'projects':
+                this.showProjects();
                 break;
             case 'contact':
                 this.showContact();
@@ -453,9 +480,6 @@ class Terminal {
             case 'coffee':
                 this.cmdCoffee();
                 break;
-            case 'joke':
-                this.cmdJoke();
-                break;
             case 'weather':
                 this.cmdWeather(args);
                 break;
@@ -467,15 +491,15 @@ class Terminal {
 
     async handleEasterEgg(command) {
         const responses = {
-            'sudo rm -rf /': 'Nice try! This is a portfolio, not your production server 😅',
+            'sudo rm -rf /': 'Nice try! This is a portfolio, not your production server.',
             'sudo': 'sudo: you are not in the sudoers file. This incident will be reported.',
             'rm -rf /': 'rm: cannot remove \'/\': Permission denied (and thank goodness!)',
-            'hack nasa': 'Hacking NASA... 10%... 50%... ERROR: Nice try, but I only hack code challenges!',
-            'hack pentagon': 'The Pentagon called. They said "cute portfolio" 📞',
+            'hack nasa': 'Hacking NASA... 10%... 50%... ERROR: Nice try, but I only hack for money!',
+            'hack pentagon': 'The Pentagon called. They said "cute portfolio"',
             'install gentoo': 'ERROR: Life too short for compiling everything from source',
-            'systemctl start coffee': 'Coffee service started ☕ (virtual coffee, but still good!)',
+            'systemctl start coffee': 'Coffee service started (virtual coffee, but still good!)',
             'make me a sandwich': 'What? Make it yourself! (Or type "sudo make me a sandwich")',
-            'pwd | sudo tee': 'Ah, a person of culture! You know your Unix jokes 🎩'
+            'pwd | sudo tee': 'Ah, a person of culture! You know your Unix jokes'
         };
         
         await this.addOutput(`<div class="warning">${responses[command.toLowerCase()]}</div>`);
@@ -530,7 +554,7 @@ class Terminal {
 
     async cmdMatrix() {
         await this.addOutput('<div class="info">Matrix effect has been disabled in this version</div>');
-        await this.addOutput('<div class="success">You took the red pill 💊</div>');
+        await this.addOutput('<div class="success">You took the red pill</div>');
         await this.addOutput('<div class="info">There is no spoon... only code</div>');
     }
 
@@ -559,7 +583,7 @@ class Terminal {
             }
         }
         
-        await this.addOutput('<div class="success">HACK COMPLETE! (Just kidding, this is a portfolio 😄)</div>');
+        await this.addOutput('<div class="success">HACK COMPLETE! (Just kidding, this is a portfolio)</div>');
     }
 
     async cmdCoffee() {
@@ -581,29 +605,13 @@ class Terminal {
             '        \\______________/',
             '          \\____________/',
             '',
-            'Coffee is ready! ☕'
+            'Coffee is ready!'
         ];
         
         await this.addOutput('<div class="info">Brewing coffee...</div>');
         await this.sleep(1000);
         
         await this.addOutput('<div class="command-output"><pre>' + coffeeArt.join('\n') + '</pre></div>');
-    }
-
-    async cmdJoke() {
-        const jokes = [
-            "Why do programmers prefer dark mode? Because light attracts bugs! 🐛",
-            "How many programmers does it take to change a light bulb? None, that's a hardware problem!",
-            "Why did the programmer quit his job? He didn't get arrays! 📊",
-            "What's a programmer's favorite hangout place? Foo Bar! 🍺",
-            "Why do Java developers wear glasses? Because they can't C#! 👓",
-            "How do you comfort a JavaScript bug? You console it! 🤗",
-            "Why did the developer go broke? Because he used up all his cache! 💸",
-            "What do you call a programmer from Finland? Nerdic! 🇫🇮"
-        ];
-        
-        const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
-        await this.addOutput(`<div class="success">${randomJoke}</div>`);
     }
 
     async cmdWeather(args) {
@@ -636,10 +644,16 @@ class Terminal {
     async addOutput(html, instant = false) {
         const div = document.createElement('div');
         div.className = 'output-line';
+        // Set consistent initial styling
+        div.style.fontFamily = "'VT323', monospace";
+        div.style.fontSize = "38px";
+        div.style.lineHeight = "1.2";
+        
         this.output.appendChild(div);
         
         if (instant) {
             div.innerHTML = html;
+            this.applyConsistentStyling(div);
         } else {
             await this.typeHTML(div, html);
         }
@@ -665,7 +679,7 @@ class Terminal {
         const welcomeLines = [
             `<div class="success">Welcome to nikhil's terminal portfolio!</div>`,
             `<div class="info">Type <span class="help-command">help</span> to see available commands.</div>`,
-            `<div class="command-list">Try: <span class="command-name">about</span>, <span class="command-name">skills</span>, <span class="command-name">projects</span>, <span class="command-name">timeline</span></div>`
+            `<div class="command-list">Try: <span class="command-name">about</span>, <span class="command-name">skills</span>, <span class="command-name">projects</span></div>`
         ];
 
         for (const line of welcomeLines) {
@@ -683,14 +697,13 @@ class Terminal {
             `<ul><li><span class="command-name">about</span> - Learn about me</li></ul>`,
             `<ul><li><span class="command-name">skills</span> - View my technical skills</li></ul>`,
             `<ul><li><span class="command-name">projects</span> - See my featured projects</li></ul>`,
-            `<ul><li><span class="command-name">timeline</span> - My programming journey</li></ul>`,
             `<ul><li><span class="command-name">contact</span> - Get in touch</li></ul>`,
             `<ul><li><span class="command-name">resume</span> - View my resume</li></ul>`,
             ``,
             `<div class="command-output"><h2>Terminal Commands:</h2></div>`,
             `<ul><li><span class="command-name">echo</span> [text] - Display text</li></ul>`,
             `<ul><li><span class="command-name">neofetch</span> - System information</li></ul>`,
-            `<ul><li><span class="command-name">ls</span> - List directory contents</li></ul>`,
+            `<ul><li><span class="command-name">ls</span> [-la] - List directory contents</li></ul>`,
             `<ul><li><span class="command-name">pwd</span> - Print working directory</li></ul>`,
             `<ul><li><span class="command-name">whoami</span> - Display current user</li></ul>`,
             `<ul><li><span class="command-name">date</span> - Display current date and time</li></ul>`,
@@ -701,10 +714,29 @@ class Terminal {
             `<ul><li><span class="command-name">fortune</span> - Random quote</li></ul>`,
             `<ul><li><span class="command-name">cowsay</span> [text] - Cow says text</li></ul>`,
             `<ul><li><span class="command-name">figlet</span> [text] - ASCII art text</li></ul>`,
+            `<ul><li><span class="command-name">mkdir</span> [dir] - Create directory (sim)</li></ul>`,
+            `<ul><li><span class="command-name">touch</span> [file] - Create file (sim)</li></ul>`,
+            `<ul><li><span class="command-name">rm</span> [file] - Remove file (sim)</li></ul>`,
+            `<ul><li><span class="command-name">uname</span> [-a] - System information</li></ul>`,
+            `<ul><li><span class="command-name">ps</span> - Show running processes</li></ul>`,
+            `<ul><li><span class="command-name">df</span> - Show disk usage</li></ul>`,
+            `<ul><li><span class="command-name">free</span> - Show memory usage</li></ul>`,
+            `<ul><li><span class="command-name">top</span> - Display running processes</li></ul>`,
+            `<ul><li><span class="command-name">curl</span> [url] - Fetch data from URL</li></ul>`,
+            `<ul><li><span class="command-name">ping</span> [host] - Ping a host</li></ul>`,
+            ``,
+            `<div class="command-output"><h2>Fun Commands:</h2></div>`,
+            `<ul><li><span class="command-name">theme</span> [amber|green|blue] - Change theme</li></ul>`,
+            `<ul><li><span class="command-name">sound</span> [on|off] - Toggle sound effects</li></ul>`,
+            `<ul><li><span class="command-name">matrix</span> - Enter the matrix</li></ul>`,
+            `<ul><li><span class="command-name">hack</span> [target] - Initiate hack sequence</li></ul>`,
+            `<ul><li><span class="command-name">coffee</span> - Brew some coffee</li></ul>`,
+            `<ul><li><span class="command-name">weather</span> [city] - Check weather</li></ul>`,
             ``,
             `<ul><li><span class="command-name">clear</span> - Clear terminal</li></ul>`,
             `<ul><li><span class="command-name">exit</span> - Exit terminal</li></ul>`,
-            `<div class="info">Tip: Press Enter or ESC to interrupt typing animations</div>`
+            `<div class="info">Tip: Press Enter or ESC to interrupt typing animations</div>`,
+            `<div class="info">Tip: Use Tab for command completion, Up/Down arrows for history</div>`
         ];
 
         for (const line of helpLines) {
@@ -875,8 +907,26 @@ class Terminal {
             '├── skills.txt',
             '├── projects/',
             '│   ├── shell-in-java/',
+            '│   │   ├── src/',
+            '│   │   ├── lib/',
+            '│   │   └── README.md',
+            '│   ├── kafka-from-scratch/',
+            '│   │   ├── broker/',
+            '│   │   ├── producer/',
+            '│   │   ├── consumer/',
+            '│   │   └── protocol/',
             '│   ├── relevant-leetcode/',
-            '│   └── life-checklist/',
+            '│   │   ├── algorithms/',
+            '│   │   ├── data-structures/',
+            '│   │   └── solutions.md',
+            '│   ├── life-checklist/',
+            '│   │   ├── lib/',
+            '│   │   ├── assets/',
+            '│   │   └── pubspec.yaml',
+            '│   └── terminal-portfolio/',
+            '│       ├── index.html',
+            '│       ├── script.js',
+            '│       └── styles.css',
             '├── resume.pdf',
             '├── contact.json',
             '├── timeline.log',
@@ -888,7 +938,7 @@ class Terminal {
             '    ├── fonts/',
             '    └── images/',
             '',
-            '5 directories, 8 files',
+            '9 directories, 15 files',
             '</pre>',
             '</div>'
         ];
@@ -1163,19 +1213,28 @@ class Terminal {
         const projectLines = [
             `<div class="command-output"><h1>Featured Projects</h1></div>`,
             ``,
-            `<div class="command-output"><h2>Shell in Java</h2></div>`,
-            `<div>A custom Unix-like shell implementation built in Java</div>`,
-            `<ul><li>Command parsing and execution</li></ul>`,
-            `<ul><li>Built-in commands (cd, ls, pwd, etc.)</li></ul>`,
+            `<div class="command-output"><h2>Shell that runs on the JVM</h2></div>`,
+            `<div>A Unix-like shell implementation built in Java that runs on the JVM</div>`,
+            `<ul><li>Command parsing and execution engine</li></ul>`,
+            `<ul><li>Built-in commands (cd, ls, pwd, grep, etc.)</li></ul>`,
             `<ul><li>Process management and I/O redirection</li></ul>`,
-            `<div><a href="#" target="_blank">GitHub Repository</a></div>`,
+            `<ul><li>Cross-platform compatibility through JVM</li></ul>`,
+            `<div class="warning">🚧 Work in Progress</div>`,
+            ``,
+            `<div class="command-output"><h2>Apache Kafka from scratch</h2></div>`,
+            `<div>A distributed streaming platform implementation from ground up</div>`,
+            `<ul><li>Distributed log storage and replication</li></ul>`,
+            `<ul><li>Producer-consumer messaging architecture</li></ul>`,
+            `<ul><li>Fault tolerance and partition management</li></ul>`,
+            `<ul><li>Network protocol implementation</li></ul>`,
+            `<div class="warning">🚧 Work in Progress</div>`,
             ``,
             `<div class="command-output"><h2>Relevant LeetCode Solutions</h2></div>`,
-            `<div>Curated collection of algorithmic problem solutions</div>`,
+            `<div>Curated collection of algorithmic problem solutions with almost 100 stars</div>`,
             `<ul><li>Data structures and algorithms practice</li></ul>`,
-            `<ul><li>Optimized solutions with analysis</li></ul>`,
+            `<ul><li></li></ul>`,
             `<ul><li>Multiple language implementations</li></ul>`,
-            `<div><a href="#" target="_blank">GitHub Repository</a></div>`,
+            `<div><a href="#" target="https://github.com/nikhilm25/RelevantLeetcode">GitHub Repository</a></div>`,
             ``,
             `<div class="command-output"><h2>Life Checklist App</h2></div>`,
             `<div>A personal productivity and goal tracking application</div>`,
@@ -1184,52 +1243,13 @@ class Terminal {
             `<ul><li>Cross-platform mobile app built with Flutter</li></ul>`,
             `<div><a href="#" target="_blank">GitHub Repository</a></div>`,
             ``,
-            `<div class="info">Type 'timeline' to see my journey</div>`
+            `<div class="info">Type 'contact' to get in touch</div>`
         ];
 
         for (const line of projectLines) {
             if (this.shouldStopTyping) break;
             await this.addOutput(line);
             await this.sleep(60);
-        }
-    }
-
-    async showTimeline() {
-        const timelineLines = [
-            `<div class="command-output"><h1>My Programming Journey</h1></div>`,
-            ``,
-            `<div class="timeline-year">2020</div>`,
-            `<ul><li>Started learning programming fundamentals</li></ul>`,
-            `<ul><li>First "Hello World" in C</li></ul>`,
-            `<ul><li>Basic problem solving with simple algorithms</li></ul>`,
-            ``,
-            `<div class="timeline-year">2021</div>`,
-            `<ul><li>Dove deep into C++ and object-oriented programming</li></ul>`,
-            `<ul><li>Started competitive programming journey</li></ul>`,
-            `<ul><li>Built first console-based projects</li></ul>`,
-            ``,
-            `<div class="timeline-year">2022</div>`,
-            `<ul><li>Learned Python and web development basics</li></ul>`,
-            `<ul><li>Started contributing to open source projects</li></ul>`,
-            `<ul><li>Built my first full-stack web application</li></ul>`,
-            ``,
-            `<div class="timeline-year">2023</div>`,
-            `<ul><li>Explored mobile development with Flutter</li></ul>`,
-            `<ul><li>Learned system design and database concepts</li></ul>`,
-            `<ul><li>Internship experience in software development</li></ul>`,
-            ``,
-            `<div class="timeline-year">2024</div>`,
-            `<ul><li>Advanced algorithms and data structures mastery</li></ul>`,
-            `<ul><li>Built complex projects including this terminal portfolio</li></ul>`,
-            `<ul><li>Preparing for software engineering career</li></ul>`,
-            ``,
-            `<div class="info">Type 'contact' to get in touch</div>`
-        ];
-
-        for (const line of timelineLines) {
-            if (this.shouldStopTyping) break;
-            await this.addOutput(line);
-            await this.sleep(80);
         }
     }
 
@@ -1242,13 +1262,13 @@ class Terminal {
             ``,
             `<div class="command-output"><h2>Contact Information:</h2></div>`,
             `<ul><li>GitHub: <a href="https://github.com/nikhilm25" target="_blank">github.com/nikhilm25</a></li></ul>`,
-            `<ul><li>Email: Available on resume</li></ul>`,
-            `<ul><li>LinkedIn: Connect with me for professional networking</li></ul>`,
+            `<ul><li>Email: <a href="mailto:nikhilmaan25@gmail.com">nikhilmaan25@gmail.com</a></li></ul>`,
+            `<ul><li>LinkedIn: <a href="https://www.linkedin.com/in/nikhil-maan-308821277/" target="_blank">linkedin.com/in/nikhil-maan-308821277/</a></li></ul>`,
             ``,
             `<div class="command-output"><h2>Current Status:</h2></div>`,
-            `<ul><li>🟢 Available for internship opportunities</li></ul>`,
-            `<ul><li>🟢 Open to freelance projects</li></ul>`,
-            `<ul><li>🟢 Looking for collaboration on open source</li></ul>`,
+            `<ul><li>Available for internship opportunities</li></ul>`,
+            `<ul><li>Open to freelance projects</li></ul>`,
+            `<ul><li>Looking for collaboration on open source</li></ul>`,
             ``,
             `<div class="info">Type 'resume' to view my detailed resume</div>`
         ];
@@ -1306,7 +1326,7 @@ class Terminal {
         await this.addOutput('<div class="info">Cleaning up processes...</div>');
         await this.sleep(600);
         
-        await this.addOutput('<div class="success">Thanks for visiting! Goodbye! 👋</div>');
+        await this.addOutput('<div class="success">Thanks for visiting! Goodbye!</div>');
         await this.sleep(1000);
         
         // Add the turning-off class to trigger the CRT turn-off animation

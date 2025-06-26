@@ -41,7 +41,7 @@ body {
     color: var(--text);
     font-family: 'VT323', monospace;
     font-size: 38px; /* Universal font size */
-    line-height: 1.6;
+    line-height: 1.2;
     height: 100vh;
     overflow: hidden;
     animation: turn-on 3s cubic-bezier(0.230, 1.000, 0.320, 1.000), vhs-flicker 8ms infinite;
@@ -113,16 +113,13 @@ body::after {
 .suggestion-item {
     padding: 1px 8px;
     cursor: pointer;
-    font-size: 38px !important;
     color: #5a5a5a;
     background: transparent;
     border: none;
     display: block;
     margin-bottom: 1px;
     position: relative;
-    font-family: 'VT323', monospace;
     white-space: nowrap;
-    line-height: 1.1;
 }
 
 .suggestion-item:hover,
@@ -141,15 +138,37 @@ body::after {
     display: none;
 }
 
+/* Standardize ALL text elements with consistent font properties */
+.output-line,
+.prompt,
+.command-input,
+.command-output,
+.command-output *,
+.welcome-art,
+.help-command,
+.command-list,
+.timeline-year,
+.project-title,
+.skill-category,
+.error,
+.success,
+.info,
+.warning,
+.boot-sequence,
+.command-name,
+.suggestion-item {
+    font-family: 'VT323', monospace !important;
+    font-size: 38px !important;
+    line-height: 1.2 !important;
+    font-weight: normal !important;
+}
+
 /* Reduce line spacing globally */
 .output-line {
     margin: 1px 0;
     word-wrap: break-word;
     flex-shrink: 0;
     white-space: pre-wrap;
-    font-size: 38px !important;
-    font-family: 'VT323', monospace;
-    line-height: 1.1;
 }
 
 .prompt-line {
@@ -161,18 +180,20 @@ body::after {
     margin-top: auto;
 }
 
-/* Standardize all command output elements with tighter spacing */
-.command-output,
+/* Remove all previous font size overrides and use inheritance */
 .command-output h1,
 .command-output h2,
 .command-output h3,
 .command-output div,
 .command-output pre,
 .command-output ul,
-.command-output li {
-    font-size: 38px !important;
-    font-family: 'VT323', monospace;
-    line-height: 1.1;
+.command-output li,
+.command-output p,
+.command-output span,
+.command-output a {
+    font-family: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
     margin: 1px 0;
 }
 
@@ -223,7 +244,7 @@ h1, h2, h3 {
     visibility: visible;
     pointer-events: none;
     z-index: 10;
-    text-shadow: 0 0 20px var(--text), 0 0 40px var(--text), 0 0 60px var (--text);
+    text-shadow: 0 0 20px var(--text), 0 0 40px var(--text), 0 0 60px var(--text);
     animation: textShadow 1.6s infinite;
 }
 
@@ -461,9 +482,6 @@ h1, h2, h3 {
     word-wrap: break-word;
     flex-shrink: 0;
     white-space: pre-wrap;
-    font-size: 38px !important;
-    font-family: 'VT323', monospace;
-    line-height: 1.1;
 }
 
 .prompt-line {
@@ -482,16 +500,12 @@ h1, h2, h3 {
     flex-shrink: 0;
     animation: textShadow 1.6s infinite;
     text-shadow: 0 0 10px var(--text), 0 0 20px var(--text), 0 0 30px var(--text);
-    font-size: 38px !important;
-    font-family: 'VT323', monospace;
 }
 
 .command-input {
     background: transparent;
     border: none;
     color: var(--text);
-    font-family: 'VT323', monospace;
-    font-size: 38px !important;
     outline: none;
     flex: 1;
     caret-color: var(--console-color);
@@ -543,512 +557,7 @@ h1, h2, h3 {
     font-size: 38px !important;
 }
 
-/* Only TERMINAL-01 overlay gets different size */
-.crt-overlay {
-    color: var(--text);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 77px;
-    font-weight: 600;
-    visibility: visible;
-    pointer-events: none;
-    z-index: 10;
-    text-shadow: 0 0 20px var(--text), 0 0 40px var(--text), 0 0 60px var(--text);
-    animation: textShadow 1.6s infinite;
-}
-
-/* CRT Screen Effects */
-@keyframes turn-on {
-    0% {
-        transform: scale(1, 0.8) translate3d(0, 0, 0);
-        filter: brightness(30);
-        opacity: 1;
-    }
-    3.5% {
-        transform: scale(1, 0.8) translate3d(0, 100%, 0);
-    }
-    3.6% {
-        transform: scale(1, 0.8) translate3d(0, -100%, 0);
-        opacity: 1;
-    }
-    9% {
-        transform: scale(1.3, 0.6) translate3d(0, 100%, 0);
-        filter: brightness(30);
-        opacity: 0;
-    }
-    11% {
-        transform: scale(1, 1) translate3d(0, 0, 0);
-        filter: contrast(0) brightness(0);
-        opacity: 0;
-    }
-    100% {
-        transform: scale(1, 1) translate3d(0, 0, 0);
-        filter: contrast(1) brightness(1.2) saturate(1.3);
-        opacity: 1;
-    }
-}
-
-@keyframes turn-off {
-    0% {
-        transform: scale(1, 1.3) translate3d(0, 0, 0);
-        filter: brightness(1);
-        opacity: 1;
-    }
-    60% {
-        transform: scale(1.3, 0.001) translate3d(0, 0, 0);
-        filter: brightness(10);
-    }
-    100% {
-        animation-timing-function: cubic-bezier(0.755, 0.050, 0.855, 0.060);
-        transform: scale(0.000, 0.0001) translate3d(0, 0, 0);
-        filter: brightness(50);
-        opacity: 0;
-    }
-}
-
-/* VHS Glitch Effect - Subtle Version */
-@keyframes vhs-flicker {
-    0% { background: #0a0a0a; }
-    28% { background: #0a0a0a; }
-    30% { background: rgba(10, 10, 10, 0.98); }
-    33% { background: #0a0a0a; }
-    34% { background: rgba(10, 10, 10, 0.96); }
-    35% { background: #0a0a0a; }
-    100% { background: #0a0a0a; }
-}
-
-/* VHS Text Distortion - Reduced Frequency */
-.output-line,
-.prompt,
-.command-input,
-.command-output {
-    animation: vhs-blur 40ms infinite, vhs-text-flick 8s infinite, vhs-text-jump 12s infinite;
-}
-
-@keyframes vhs-text-flick {
-    0% { left: 0; }
-    5% { left: 0; }
-    6% { left: 1px; }
-    7% { left: 0; }
-    95% { left: 0; }
-    96% { left: -1px; }
-    97% { left: 0; }
-    100% { left: 0; }
-}
-
-@keyframes vhs-text-jump {
-    0% { top: 0; }
-    10% { top: 0; }
-    11% { top: 2px; }
-    12% { top: 0; }
-    90% { top: 0; }
-    91% { top: -1px; }
-    92% { top: 0; }
-    100% { top: 0; }
-}
-
-/* VHS Random Scan Lines - Higher Frequency, Lower Opacity */
-.vhs-random-lines {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 5;
-    opacity: 0;
-    animation: vhs-random-appear 3s infinite;
-}
-
-.vhs-random-lines::before {
-    content: "";
-    position: absolute;
-    top: 20%;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(255, 179, 71, 0.3) 20%, 
-        rgba(255, 255, 255, 0.4) 50%, 
-        rgba(255, 179, 71, 0.3) 80%, 
-        transparent 100%);
-    animation: vhs-line-move 4s infinite linear;
-}
-
-.vhs-random-lines::after {
-    content: "";
-    position: absolute;
-    top: 60%;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(255, 0, 0, 0.2) 30%, 
-        rgba(0, 255, 0, 0.2) 70%, 
-        transparent 100%);
-    animation: vhs-line-move 5s infinite linear reverse;
-}
-
-@keyframes vhs-random-appear {
-    0% { opacity: 0; }
-    5% { opacity: 0.4; }
-    10% { opacity: 0; }
-    25% { opacity: 0; }
-    30% { opacity: 0.3; }
-    35% { opacity: 0; }
-    60% { opacity: 0; }
-    65% { opacity: 0.5; }
-    70% { opacity: 0; }
-    85% { opacity: 0; }
-    90% { opacity: 0.2; }
-    95% { opacity: 0; }
-    100% { opacity: 0; }
-}
-
-@keyframes vhs-line-move {
-    0% { 
-        filter: blur(2px);
-        opacity: 0.8;
-        bottom: 0;
-    }
-    10% { 
-        filter: blur(1px);
-        opacity: 0.9;
-        bottom: -50px;
-    }
-    12% { 
-        filter: blur(2px);
-        opacity: 0.8;
-        bottom: 0;
-    }
-    54% { 
-        bottom: 0;
-    }
-    55% { 
-        bottom: -150px;
-    }
-    56% { 
-        bottom: 0;
-    }
-    86% { 
-        bottom: 0;
-    }
-    87% { 
-        bottom: -300px;
-    }
-    88% { 
-        bottom: 0;
-    }
-    100% { 
-        filter: blur(2px);
-        opacity: 0.8;
-        bottom: 0;
-    }
-}
-
-/* Enhanced Terminal Body Distortion - Reduced Frequency */
-.terminal-body {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    z-index: 3;
-    animation: textShadow 1.6s infinite, vhs-track 8ms infinite, vhs-terminal-distort 8s infinite;
-    scroll-behavior: smooth;
-}
-
-@keyframes vhs-terminal-distort {
-    0% { 
-        transform: scale(1, 1) skew(0, 0);
-        filter: contrast(1) brightness(1);
-    }
-    5% { 
-        transform: scale(1, 1) skew(0, 0);
-        filter: contrast(1) brightness(1);
-    }
-    6% { 
-        transform: scale(1, 1.005) skew(0.1deg, 0);
-        filter: contrast(1.1) brightness(1.1);
-    }
-    7% { 
-        transform: scale(1, 0.998) skew(-0.1deg, 0);
-        filter: contrast(0.9) brightness(0.95);
-    }
-    8% { 
-        transform: scale(1, 1) skew(0, 0);
-        filter: contrast(1) brightness(1);
-    }
-    50% { 
-        transform: scale(1, 1) skew(0, 0);
-        filter: contrast(1) brightness(1);
-    }
-    91% { 
-        transform: scale(1, 1) skew(0, 0);
-        filter: contrast(1) brightness(1);
-    }
-    92% { 
-        transform: scale(0.999, 1.003) skew(0.05deg, 0);
-        filter: contrast(1.05) brightness(1.05);
-    }
-    93% { 
-        transform: scale(1.001, 0.997) skew(-0.05deg, 0);
-        filter: contrast(0.95) brightness(0.98);
-    }
-    94% { 
-        transform: scale(1, 1) skew(0, 0);
-        filter: contrast(1) brightness(1);
-    }
-    100% { 
-        transform: scale(1, 1) skew(0, 0);
-        filter: contrast(1) brightness(1);
-    }
-}
-
-/* Random Text Shadow Glitch - Much Less Frequent */
-.output-line:nth-child(odd),
-.command-output:nth-child(even) {
-    animation: vhs-text-shadow 15s infinite;
-}
-
-@keyframes vhs-text-shadow {
-    0% { 
-        text-shadow: 0 0 10px var(--text);
-    }
-    2% {
-        text-shadow: 0 0 10px var(--text);
-    }
-    3% { 
-        text-shadow: 
-            1px 2px 0 #00ff00, 
-            -2px -1px 0 #ff0000, 
-            0 0 10px var(--text);
-    }
-    4% { 
-        text-shadow: 
-            -1px 1px 0 #ff0000, 
-            2px -1px 0 #00ff00, 
-            0 0 10px var(--text);
-    }
-    5% { 
-        text-shadow: 0 0 10px var(--text);
-    }
-    50% { 
-        text-shadow: 0 0 10px var(--text);
-    }
-    95% { 
-        text-shadow: 0 0 10px var(--text);
-    }
-    96% { 
-        text-shadow: 
-            -0.5px 0.5px 0 #ff0000, 
-            1px -0.5px 0 #00ff00, 
-            0 0 10px var(--text);
-    }
-    97% { 
-        text-shadow: 0 0 10px var(--text);
-    }
-    100% { 
-        text-shadow: 0 0 10px var(--text);
-    }
-}
-
-/* VHS Text Distortion */
-@keyframes vhs-blur {
-    0% { filter: blur(1px); opacity: 0.95; }
-    50% { filter: blur(1px); opacity: 1; }
-    100% { filter: blur(1px); opacity: 0.95; }
-}
-
-/* VHS scan lines at bottom */
-.vhs-scanlines {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 6px;
-    z-index: 2;
-    pointer-events: none;
-    animation: vhs-lines 12ms infinite;
-}
-
-.vhs-scanlines::before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    background: rgba(255, 179, 71, 0.6);
-    top: 0;
-}
-
-.vhs-scanlines::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 1px;
-    background: rgba(255, 179, 71, 0.3);
-    top: 3px;
-}
-
-@keyframes vhs-lines {
-    0% { 
-        filter: blur(2px);
-        opacity: 0.8;
-        bottom: 0;
-    }
-    10% { 
-        filter: blur(1px);
-        opacity: 0.9;
-        bottom: -50px;
-    }
-    12% { 
-        filter: blur(2px);
-        opacity: 0.8;
-        bottom: 0;
-    }
-    54% { 
-        bottom: 0;
-    }
-    55% { 
-        bottom: -150px;
-    }
-    56% { 
-        bottom: 0;
-    }
-    86% { 
-        bottom: 0;
-    }
-    87% { 
-        bottom: -300px;
-    }
-    88% { 
-        bottom: 0;
-    }
-    100% { 
-        filter: blur(2px);
-        opacity: 0.8;
-        bottom: 0;
-    }
-}
-
-/* Enhanced glitch effects */
-@keyframes glitch {
-    0% {
-        text-shadow: 0.2px 0 0 var(--text), -0.2px 0 0 var(--text), 0 0 10px var(--text);
-        transform: translate(0);
-    }
-    2% {
-        text-shadow: 2.4px 0 0 var(--text), -2.4px 0 0 var(--text), 0 0 15px var(--text);
-        transform: translate(2px);
-    }
-    4% {
-        text-shadow: -0.2px 0 0 var(--text), 0.2px 0 0 var(--text), 0 0 10px var(--text);
-        transform: translate(-2px);
-    }
-    6% {
-        text-shadow: 0.2px 0 0 var(--text), -0.2px 0 0 var(--text), 0 0 10px var(--text);
-        transform: translate(0);
-    }
-    8% {
-        text-shadow: -1.2px 0 0 var(--text), 1.2px 0 0 var(--text), 0 0 20px var(--text);
-    }
-    10% {
-        text-shadow: 0.2px 0 0 var(--text), -0.2px 0 0 var(--text), 0 0 10px var(--text);
-        transform: translate(0);
-    }
-    100% {
-        text-shadow: 0.2px 0 0 var(--text), -0.2px 0 0 var(--text), 0 0 10px var(--text);
-        transform: translate(0);
-    }
-}
-
-/* Random glitch trigger */
-.glitch-effect {
-    animation: glitch 0.3s infinite;
-}
-
-/* Loading spinner */
-.loading-spinner {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border: 2px solid var(--overlay);
-    border-radius: 50%;
-    border-top-color: var(--foam);
-    animation: spin 1s ease-in-out infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-/* Progress bar */
-.progress-bar {
-    width: 100%;
-    height: 4px;
-    background: var(--overlay);
-    margin: 8px 0;
-    overflow: hidden;
-}
-
-.progress-fill {
-    height: 100%;
-    background: var(--foam);
-    width: 0%;
-    transition: width 0.3s ease;
-    animation: progress-glow 2s infinite;
-    box-shadow: 0 0 10px var(--foam), 0 0 20px var(--foam);
-}
-
-@keyframes progress-glow {
-    0%, 100% { box-shadow: 0 0 10px var(--foam), 0 0 20px var(--foam); }
-    50% { box-shadow: 0 0 20px var(--foam), 0 0 40px var(--foam), 0 0 60px var(--foam); }
-}
-
-/* Enhanced cursor with bloom */
-.cursor-blink {
-    display: inline-block;
-    background-color: var(--text);
-    color: var(--console-bg);
-    animation: cursor-blink 1s infinite;
-    text-shadow: 0 0 10px var(--text);
-    box-shadow: 0 0 5px var(--text);
-}
-
-@keyframes cursor-blink {
-    0%, 50% { 
-        opacity: 1;
-        background-color: var(--text);
-    }
-    51%, 100% { 
-        opacity: 0;
-        background-color: transparent;
-    }
-}
-
-/* Boot sequence styles */
-.boot-sequence {
-    color: var(--text);
-    font-family: 'VT323', monospace;
-}
-
-.boot-line {
-    margin: 2px 0;
-}
-
-.boot-ok {
-    color: var(--text);
-}
-
-.boot-fail {
-    color: var(--text);
-}
-
-/* Mobile responsiveness - keep universal font size */
+/* Mobile responsiveness - maintain consistent font sizing */
 @media (max-width: 768px) {
     .crt-frame {
         border-width: 0.5rem;
@@ -1063,12 +572,7 @@ h1, h2, h3 {
     .prompt,
     .command-input,
     .command-output,
-    .command-output h1,
-    .command-output h2,
-    .command-output h3,
-    .command-output li,
-    .command-output div,
-    .command-output pre,
+    .command-output *,
     .welcome-art,
     .help-command,
     .command-list,
@@ -1083,7 +587,7 @@ h1, h2, h3 {
     .suggestion-item,
     .command-name {
         font-size: 32px !important;
-        line-height: 1.1;
+        line-height: 1.2 !important;
     }
     
     .terminal-body {
@@ -1099,11 +603,6 @@ h1, h2, h3 {
         bottom: 60px;
         min-width: 100px;
     }
-    
-    .suggestion-item {
-        font-size: 32px !important;
-        padding: 1px 6px;
-    }
 }
 
 @media (max-width: 480px) {
@@ -1115,12 +614,7 @@ h1, h2, h3 {
     .prompt,
     .command-input,
     .command-output,
-    .command-output h1,
-    .command-output h2,
-    .command-output h3,
-    .command-output li,
-    .command-output div,
-    .command-output pre,
+    .command-output *,
     .welcome-art,
     .help-command,
     .command-list,
@@ -1135,7 +629,7 @@ h1, h2, h3 {
     .suggestion-item,
     .command-name {
         font-size: 28px !important;
-        line-height: 1.1;
+        line-height: 1.2 !important;
     }
     
     .terminal-body {
@@ -1151,10 +645,5 @@ h1, h2, h3 {
         right: 5px;
         bottom: 50px;
         min-width: 80px;
-    }
-    
-    .suggestion-item {
-        font-size: 24px !important;
-        padding: 1px 4px;
     }
 }

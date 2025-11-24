@@ -1,8 +1,1 @@
-master shit should be there
-
-shit to do:
-host
-add in your actual projects and stuff
-add in something else aswell
-maybe blogs
-etc
+https://nikhilm25.github.io/portfolio/

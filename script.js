@@ -632,7 +632,7 @@ class Terminal {
             `Humidity: ${Math.floor(Math.random() * 60 + 30)}%`,
             `Wind: ${Math.floor(Math.random() * 20 + 5)} km/h`,
             '',
-            '(Simulated weather data for portfolio demo)'
+            '(Fake data because I do not care.)'
         ];
         
         for (const line of weatherLines) {
@@ -761,21 +761,21 @@ class Terminal {
         await this.sleep(Math.random() * 800 + 400); // 400-1200ms loading
         
         const archLogoAndInfo = [
-            `                   -`                    + `                    nikhil@portfolio`,
-            `                  .o+`                   + `                   ----------------`,
-            `                 \`ooo/`                  + `                  OS: Portfolio Terminal v1.0`,
-            `                \`+oooo: `                + `                 Host: CRT Emulator`,
-            `               \`+oooooo: `               + `                Kernel: portfolio-kernel`,
-            `               -+oooooo+: `              + `                Shell: portfolio-sh`,
-            `             \`/:-:++oooo+: `             + `               Resolution: ${window.screen.width}x${window.screen.height}`,
-            `            \`/++++/+++++++: `            + `              Terminal: Retro CRT`,
-            `           \`/++++++++++++++: `           + `             CPU: JavaScript Engine`,
+            `                   -`                    + `                       nikhil@portfolio`,
+            `                  .o+`                   + `                      ----------------`,
+            `                 \`ooo/`                  + `                     OS: Portfolio Terminal v1.0`,
+            `                \`+oooo: `                + `                   Host: CRT Emulator`,
+            `               \`+oooooo: `               + `                  Kernel: portfolio-kernel`,
+            `               -+oooooo+: `              + `                 Shell: portfolio-sh`,
+            `             \`/:-:++oooo+: `             + `                Resolution: ${window.screen.width}x${window.screen.height}`,
+            `            \`/++++/+++++++: `            + `               Terminal: Retro CRT`,
+            `           \`/++++++++++++++: `           + `              CPU: JavaScript Engine`,
             `          \`/+++ooooooooooooo/\` `         + `            Memory: Unlimited`,
             `         ./ooosssso++osssssso+\` `        + `           Uptime: ${Math.floor((Date.now() - this.startTime) / 1000)}s`,
             `        .oossssso-\`\`\`\`/ossssss+\` `       + `          Packages: ${this.commandHistory.length} commands run`,
             `       -osssssso.      :ssssssso. `      + `         Theme: Rose Pine [CRT]`,
             `      :osssssss/        osssso+++. `     + `        Icons: Terminal ASCII`,
-            `     /ossssssss/        +ssssooo/- `     + `       Browser: ${navigator.userAgent.split(' ')[0]}`,
+            `     /ossssssss/        +ssssooo/- `     + `        Browser: ${navigator.userAgent.split(' ')[0]}`,
             `   \`/ossssso+/:-        -:/+osssso+- `   + `      `,
             `  \`+sso+:-\`                 \`.-/+oso: `    + `     `,
             ` \`++:.                           \`-/+/ `   + `    `,

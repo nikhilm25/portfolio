@@ -801,7 +801,7 @@ class Terminal {
         }
         
         const files = [
-            'portfolio.md', 'skills.txt', 'projects/', 'resume.pdf', 
+            'portfolio.md', 'skills.txt', 'projects/', 'nikhil_resume_feb_2026_v3.pdf', 
             'contact.json', 'timeline.log', '.gitignore', 'README.md',
             'package.json', 'src/', 'assets/', '.env'
         ];
@@ -814,7 +814,7 @@ class Terminal {
                 `<div>-rw-r--r--  1 nikhil nikhil  1337 ${new Date().toLocaleDateString()} portfolio.md</div>`,
                 `<div>-rw-r--r--  1 nikhil nikhil   256 ${new Date().toLocaleDateString()} skills.txt</div>`,
                 `<div>drwxr-xr-x  2 nikhil nikhil  4096 ${new Date().toLocaleDateString()} projects/</div>`,
-                `<div>-rw-r--r--  1 nikhil nikhil  2048 ${new Date().toLocaleDateString()} resume.pdf</div>`,
+                `<div>-rw-r--r--  1 nikhil nikhil  2048 ${new Date().toLocaleDateString()} nikhil_resume_feb_2026_v3.pdf</div>`,
                 `<div>-rw-r--r--  1 nikhil nikhil   512 ${new Date().toLocaleDateString()} contact.json</div>`,
                 `<div>-rw-r--r--  1 nikhil nikhil  1024 ${new Date().toLocaleDateString()} timeline.log</div>`,
                 `</div>`
@@ -865,8 +865,8 @@ class Terminal {
         
         const fileContents = {
             'portfolio.md': '# Nikhil\'s Portfolio\n\nA terminal-based portfolio showcasing my projects and skills.',
-            'skills.txt': 'Languages: C, C++, Python, JavaScript, Go, Java\nDatabases: MySQL, PostgreSQL, Firebase\nFrameworks: Flutter, Scikit-Learn',
-            'resume.pdf': '[Binary file - use \'resume\' command to view]',
+            'skills.txt': 'Languages: Python, C/C++, Java, JavaScript, Go, Bash, SQL\nAI/ML & Quantum: PyTorch, PennyLane (QML), XGBoost, OpenCV, CNNs, ViTs\nDeveloper Tools: Git, Docker, Linux (Bash), LaTeX\nWeb/Frameworks: Three.js, React, Node.js, Spring Boot, MySQL, MongoDB, Firebase',
+            'nikhil_resume_feb_2026_v3.pdf': '[Binary file - use \'resume\' command to view]',
             'contact.json': '{\n  "github": "nikhilm25",\n  "email": "available_on_resume",\n  "status": "available"\n}',
             'README.md': '# Portfolio Terminal\n\nA retro CRT-style terminal portfolio built with vanilla JavaScript.\n\n## Features\n- Authentic terminal commands\n- CRT monitor effects\n- Typing animations',
             '.env': 'NODE_ENV=portfolio\nVERSION=1.0.0\nAUTHOR=nikhil'
@@ -927,7 +927,7 @@ class Terminal {
             '│       ├── index.html',
             '│       ├── script.js',
             '│       └── styles.css',
-            '├── resume.pdf',
+            '├── nikhil_resume_feb_2026_v3.pdf',
             '├── contact.json',
             '├── timeline.log',
             '├── src/',
@@ -1158,14 +1158,14 @@ class Terminal {
     async showAbout() {
         const aboutLines = [
             `<div class="command-output"><h1>About Me</h1></div>`,
-            `<div>Hi! I'm Nikhil, currently a student at NSUT studying Computer Science and Artificial Intelligence.</div>`,
+            `<div>Hi! I'm Nikhil, currently a B.Tech student at NSUT studying Computer Science and Artificial Intelligence.</div>`,
             ``,
             `<div>I use arch btw.</div>`,
             `<div>Currently focused on:</div>`,
-            `<ul><li>Java and Spring Boot</li></ul>`,
-            `<ul><li>Linux and CLI applications</li></ul>`,
-            `<ul><li>Data structures and algorithms at <a href="https://leetcode.com/nikhilmaan25/">Leetcode</a></li></ul>`,
-            `<ul><li>My open source projects</li></ul>`,
+            `<ul><li>AI/ML, Quantum Machine Learning, and Computer Vision</li></ul>`,
+            `<ul><li>Full-stack Web Development (React, Node.js, Three.js)</li></ul>`,
+            `<ul><li>Data structures and algorithms at <a href="https://leetcode.com/nikhilmaan25/" target="_blank">Leetcode</a></li></ul>`,
+            `<ul><li>Building impactful projects and writing research papers</li></ul>`,
             ``,
             `<div class="info">Type 'skills' to see my technical expertise</div>`
         ];
@@ -1181,23 +1181,17 @@ class Terminal {
         const skillsLines = [
             `<div class="command-output"><h1>Technical Skills</h1></div>`,
             ``,
-            `<div class="command-output"><h2>Programming Languages:</h2></div>`,
-            `<ul><li>C/C++ - System programming, competitive programming</li></ul>`,
-            `<ul><li>Python - Backend development, data analysis</li></ul>`,
-            `<ul><li>JavaScript - Web development, Node.js</li></ul>`,
-            `<ul><li>Java - Object-oriented programming, Android development</li></ul>`,
-            `<ul><li>Go - Concurrent programming, microservices</li></ul>`,
+            `<div class="command-output"><h2>Languages:</h2></div>`,
+            `<ul><li>Python, C/C++, Java, JavaScript, Go, Bash, SQL</li></ul>`,
             ``,
-            `<div class="command-output"><h2>Databases:</h2></div>`,
-            `<ul><li>MySQL - Relational database design</li></ul>`,
-            `<ul><li>PostgreSQL - Advanced SQL, performance tuning</li></ul>`,
-            `<ul><li>Firebase - NoSQL, real-time applications</li></ul>`,
+            `<div class="command-output"><h2>AI/ML & Quantum:</h2></div>`,
+            `<ul><li>PyTorch, PennyLane (QML), XGBoost, Scikit-learn, OpenCV, CNNs, ViTs</li></ul>`,
             ``,
-            `<div class="command-output"><h2>Frameworks & Tools:</h2></div>`,
-            `<ul><li>Flutter - Cross-platform mobile development</li></ul>`,
-            `<ul><li>Scikit-Learn - Machine learning, data science</li></ul>`,
-            `<ul><li>Git - Version control, collaboration</li></ul>`,
-            `<ul><li>Docker - Containerization, deployment</li></ul>`,
+            `<div class="command-output"><h2>Developer Tools:</h2></div>`,
+            `<ul><li>Git, Docker, Linux (Bash), LaTeX, High-Performance Computing (HPC)</li></ul>`,
+            ``,
+            `<div class="command-output"><h2>Web/Frameworks:</h2></div>`,
+            `<ul><li>Three.js, React, Node.js, Spring Boot, MySQL, MongoDB, Firebase</li></ul>`,
             ``,
             `<div class="info">Type 'projects' to see what I've built</div>`
         ];
@@ -1211,30 +1205,32 @@ class Terminal {
 
     async showProjects() {
         const projectLines = [
-            `<div class="command-output"><h1>Featured Projects</h1></div>`,
+            `<div class="command-output"><h1>Projects & Publications</h1></div>`,
             ``,
-            `<div class="command-output"><h2>Shell that runs on the JVM</h2></div>`,
-            `<div>A Unix-like shell implementation built in Java that runs on the JVM</div>`,
-            `<ul><li>Command parsing and execution engine</li></ul>`,
-            `<ul><li>Built-in commands (cd, ls, pwd, grep, etc.)</li></ul>`,
-            `<ul><li>Process management and I/O redirection</li></ul>`,
-            `<ul><li>Cross-platform compatibility through JVM</li></ul>`,
-            `<div><a href="https://github.com/nikhilm25/Shell-on-the-JVM" target="https://github.com/nikhilm25/Shell-on-the-JVM">GitHub Repository</a></div>`,
+            `<div class="command-output"><h2>QVIT-RQC: Hybrid Quantum-Classical ViT (Publication)</h2></div>`,
+            `<div>Submitted to Springer Nature, 2026 (Under Review)</div>`,
+            `<ul><li>4-qubit VQC for dynamic attention (HQA) and a residual classifier (RQC)</li></ul>`,
+            `<ul><li>Achieved SOTA 99.06% accuracy on 3,064 MRI images for Brain Tumor Diagnosis</li></ul>`,
             ``,
-            `<div class="command-output"><h2>Apache Kafka from scratch</h2></div>`,
-            `<div>A distributed streaming platform implementation from ground up</div>`,
-            `<ul><li>Distributed log storage and replication</li></ul>`,
-            `<ul><li>Producer-consumer messaging architecture</li></ul>`,
-            `<ul><li>Fault tolerance and partition management</li></ul>`,
-            `<ul><li>Network protocol implementation</li></ul>`,
-            `<div class="warning">🚧 Work in Progress</div>`,
+            `<div class="command-output"><h2>Multi-modal Alzheimer’s Diagnosis (Publication)</h2></div>`,
+            `<div>Accepted at NIT Delhi Conference, 2026</div>`,
+            `<ul><li>Multi-modal approach using CNN and XGBoost from MRI Imaging and Tabular Biomarkers</li></ul>`,
+            `<ul><li>Achieved 98.8% accuracy on MRI data and 98.58% on clinical data</li></ul>`,
+            ``,
+            `<div class="command-output"><h2>Eco Twin: Urban Air Management</h2></div>`,
+            `<div>Top 5 teams nationally in SIH Grand Finale</div>`,
+            `<ul><li>Digital Twin platform using Three.js to simulate industrial hardware with real-time physics</li></ul>`,
+            `<ul><li>Geospatial dashboard with Leaflet and AI-Driven Decision Support System</li></ul>`,
             ``,
             `<div class="command-output"><h2>Relevant LeetCode Solutions</h2></div>`,
-            `<div>Curated collection of algorithmic problem solutions with almost 100 stars</div>`,
-            `<ul><li>Data structures and algorithms practice</li></ul>`,
-            `<ul><li></li></ul>`,
-            `<ul><li>Multiple language implementations</li></ul>`,
-            `<div><a href="https://github.com/nikhilm25/RelevantLeetcode" target="https://github.com/nikhilm25/RelevantLeetcode">GitHub Repository</a></div>`,
+            `<div>Curated collection of algorithmic problem solutions</div>`,
+            `<ul><li>Gained 200+ GitHub stars from contributors worldwide</li></ul>`,
+            `<div><a href="https://github.com/nikhilm25/RelevantLeetcode" target="_blank">GitHub Repository</a></div>`,
+            ``,
+            `<div class="command-output"><h2>Shell on the JVM</h2></div>`,
+            `<div>A Unix-like shell implementation built in Java that runs on the JVM</div>`,
+            `<ul><li>Command parsing, process management and I/O redirection</li></ul>`,
+            `<div><a href="https://github.com/nikhilm25/Shell-on-the-JVM" target="_blank">GitHub Repository</a></div>`,
             ``,
             `<div class="info">Type 'contact' to get in touch</div>`
         ];
@@ -1279,9 +1275,9 @@ class Terminal {
         ``,
         `<div class="info">Loading resume data...</div>`,
         ``,
-        `<div class="command-output">Resume available at: <a href="https://github.com/nikhilm25/resume/blob/main/Nikhil%20Resume%20Jun%202025.pdf" target="https://github.com/nikhilm25/resume/blob/main/Nikhil%20Resume%20Jun%202025.pdf">Click here to view</a></div>`,
+        `<div class="command-output">Resume available at: <a href="nikhil%20resume%20feb%202026%20v3.pdf" target="_blank">Click here to view</a></div>`,
         ``,
-        `<div class="success">Redirecting you to the resume link!</div>`
+        `<div class="success">Click the link above to open!</div>`
     ];
 
     for (const line of resumeLines) {
